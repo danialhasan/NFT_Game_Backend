@@ -1,3 +1,4 @@
+
 async function main() {
   const gameContractFactory = await hre.ethers.getContractFactory('Game');
   const gameContract = await gameContractFactory.deploy(
