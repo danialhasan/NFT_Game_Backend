@@ -2,6 +2,7 @@ async function main() {
   const gameContractFactory = await hre.ethers.getContractFactory('Game');
   const gameContract = await gameContractFactory.deploy(
     ['Elon Musk', 'Amirul Daiyan', 'Sham Spam', 'Shah'],
+
     [
       'https://cdn.mos.cms.futurecdn.net/VSy6kJDNq2pSXsCzb6cvYF.jpg',
       'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg',
@@ -15,7 +16,18 @@ async function main() {
   console.log('Deployed contract to ', gameContract.address);
 
   let txn;
+
+  txn = await gameContract.mintCharacterNFT(0);
+  await txn.wait();
+
   txn = await gameContract.mintCharacterNFT(1);
+  await txn.wait();
+
+
+  txn = await gameContract.mintCharacterNFT(2);
+  await txn.wait();
+
+  txn = await gameContract.mintCharacterNFT(3);
   await txn.wait();
 
   let returnedTokenURI = await gameContract.tokenURI(1);
