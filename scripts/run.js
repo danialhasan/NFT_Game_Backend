@@ -10,7 +10,12 @@ async function main() {
       'https://th-thumbnailer.cdn-si-edu.com/bZAar59Bdm95b057iESytYmmAjI=/1400x1050/filters:focal(594x274:595x275)/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/95/db/95db799b-fddf-4fde-91f3-77024442b92d/egypt_kitty_social.jpg',
     ],
     [150, 200, 120, 500],
-    [400, 200, 320, 95]
+    [400, 200, 320, 95],
+    'Big Boss Name',
+    'https://i.imgur.com/AksR0tt.png',
+    1000,
+    10000,
+    100
   );
   await gameContract.deployed();
   console.log('Deployed contract to ', gameContract.address);
@@ -22,7 +27,6 @@ async function main() {
 
   txn = await gameContract.mintCharacterNFT(1);
   await txn.wait();
-
 
   txn = await gameContract.mintCharacterNFT(2);
   await txn.wait();

@@ -15,6 +15,7 @@ import './libraries/Base64.sol';
 import 'hardhat/console.sol';
 
 contract Game is ERC721 {
+  using Counters for Counters.Counter;
   // These are the attributes our characters will have.
   struct CharacterAttributes {
     uint256 characterIndex;
@@ -24,14 +25,21 @@ contract Game is ERC721 {
     uint256 maxHp;
     uint256 attackDamage;
   }
-
-  using Counters for Counters.Counter;
+  struct BigBoss {
+    string name;
+    string imageURI;
+    uint256 hp;
+    uint256 maxHp;
+    uint256 attackDamage;
+  }
   Counters.Counter private _tokenIds; // Counter variable
 
   // This is an array of characters. Each character has the structure found in CharacterAttributes.
   CharacterAttributes[] defaultCharacters;
+  // This is an initialization of our boss.
+  BigBoss public bigBoss;
 
-  // What does all this mapping shit mean?
+  // create objects to track nftHolders and attributes via mappings (key->value)
   // Map nft's tokenId to its attributes.
   mapping(uint256 => CharacterAttributes) public nftHolderAttributes;
   // Map address to NFTs tokenId. This way we can store the owner of the NFT and reference it later.
@@ -42,9 +50,29 @@ contract Game is ERC721 {
     string[] memory characterNames,
     string[] memory characterImageURIs,
     uint256[] memory characterMaxHp,
-    uint256[] memory characterAttackDamage
+    uint256[] memory characterAttackDamage,
+    string memory bossName,
+    string memory bossImageURI,
+    uint256 bossHp,
+    uint256 bossMaxHp,
+    uint256 bossAttackDamage
   ) ERC721('Heros', 'HERO') {
     console.log('Contract deployed.');
+
+    // initalize the boss
+    bigBoss = BigBoss({
+      name: bossName,
+      imageURI: bossImageURI,
+      hp: bossHp,
+      maxHp: bossMaxHp,
+      attackDamage: bossAttackDamage
+    });
+    console.log(
+      'Done initializing boss %s w/ HP %s, img %s',
+      bigBoss.name,
+      bigBoss.hp,
+      bigBoss.imageURI
+    );
 
     // We'll iterate through this to generate some default characters.
     for (uint256 i = 0; i < characterNames.length; i += 1) {
